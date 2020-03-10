@@ -1,0 +1,18 @@
+@using Blazorise.Charts;
+@typeparam TItem
+<div class="chart-block" style="">
+    <div class="runner row justify-content-end w-100 m-0 p-1">
+        <a class="btn btn-info ml-1" href="#" role="button">Imprimer</a>
+        <a class="btn btn-warning ml-1" href="#" role="button">Plein ecran</a>
+        <style>
+            .runner {
+                height: 48px;
+                background: #f7f7f7;
+                border: 1px solid #d6d5d5;
+            }
+        </style>
+    </div>
+    <div class="bg-white shadow-16" style="margin-top:1rem">
+        <LineChart @ref="lineChart" TItem="Models.Point" />
+    </div>
+</div>

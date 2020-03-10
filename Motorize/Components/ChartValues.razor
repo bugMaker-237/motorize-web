@@ -1,0 +1,375 @@
+@using Blazorise; 
+    <Alert @ref="myAlert" Color="Color.Danger">
+        Misconfiguration with Vehicule type, please check configurations
+        <CloseButton />
+    </Alert>
+<Validations Mode="ValidationMode.Manual" Model="@VM" @ref="Validations">
+  <div class="runner w-100 p-1">
+    <a class="btn btn-success" @onclick="@Submit" role="button">Tracer</a>
+    <a class="btn btn-info" href="#" role="button">Charger</a>
+    <a class="btn btn-warning" href="#" role="button" @onclick="@Reset">Reset</a>
+    <style>
+      .runner{
+        height: 48px;
+        background: #f7f7f7;
+        border: 1px solid #d6d5d5;
+      }
+    </style>
+  </div>
+  <details open="@ExpandAll" class="more">
+      <summary><span class="more-text">Caractèristiques liées au véhicule</span></summary>
+      <div class="more-content">
+        <div class="row">
+            <div class="form-group col-12 col-md-6">
+                <label for="typeVehicule">Type de véhicule</label>
+                <Validation>
+                    <SelectEdit @bind-SelectedValue="@VM.VehicleXtics.TypeVehicule">
+                        <ChildContent>
+                            <SelectItem Value="-1">Sél. type de vehicule</SelectItem>
+                            @foreach (var item in VehicleTypes)
+                            {
+                                <SelectItem Value="@item.Key">@item.Value</SelectItem>
+                            }
+                        </ChildContent>
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </SelectEdit>
+                </Validation>
+
+            </div>
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+              <label for="">Marque du vehicule</label>
+              <Validation>
+                  <TextEdit PlaceHolder="Marque de vehicule" @bind-Text="@VM.VehicleXtics.Vehicle">
+                      <Feedback>
+                        <ValidationError />
+                      </Feedback>
+                  </TextEdit>
+              </Validation>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-md-6">
+                <label for="typeMoteur">Type de moteur</label>
+                <Validation>
+                    <SelectEdit @bind-SelectedValue="@VM.VehicleXtics.TypeMoteur">
+                        <ChildContent>
+                            <SelectItem Value="-1">Sél. type de moteur</SelectItem>
+                            @foreach (var item in MotorTypes)
+                            {
+                                <SelectItem Value="@item.Key">@item.Value</SelectItem>
+                            }
+                        </ChildContent>
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </SelectEdit>
+                </Validation>
+                
+            </div>
+            <div class="form-group col-12 col-md-6">
+                <label for="typeTransmission">Type de transmission</label>
+                <Validation>
+                    <SelectEdit @bind-SelectedValue="@VM.VehicleXtics.TypeTransmission">
+                        <ChildContent>
+                            <SelectItem Value="-1">Sél. type de transmission</SelectItem>
+                            @foreach (var item in TransmissionTypes)
+                            {
+                                <SelectItem Value="@item.Key">@item.Value</SelectItem>
+                            }
+                        </ChildContent>
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </SelectEdit>
+                </Validation>
+
+            </div>
+        </div>
+      </div>
+  </details>
+  
+  <details open="@ExpandAll" class="more">
+    <summary><span class="more-text">Données</span></summary>
+    <div class="more-content">
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(B)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation>
+                  <NumericEdit TValue="decimal" PlaceHolder="Voie au sol" @bind-Value="@VM.Data.B">
+                      <Feedback>
+                          <ValidationError />
+                      </Feedback>
+                  </NumericEdit>
+              </Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>m</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(H)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation>
+                  <NumericEdit TValue="decimal" PlaceHolder="Hauteur" @bind-Value="@VM.Data.B">
+                      <Feedback>
+                          <ValidationError />
+                      </Feedback>
+                  </NumericEdit>
+              </Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>m</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(Rk)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Rayon cinématique" @bind-Value="@VM.Data.Rk">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>m</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(Kv)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Coefficient Aérodynamique" @bind-Value="@VM.Data.Kv">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(Mo)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Masse du véhicule" @bind-Value="@VM.Data.mo">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>kg</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(nt)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Rendement Global" @bind-Value="@VM.Data.nt">
+                <Feedback>
+                    <ValidationError />
+                </Feedback>
+            </NumericEdit></Validation>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(CF)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Coefficient de surface" @bind-Value="@VM.Data.Cf">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(NMax)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Puissance Maximal" @bind-Value="@VM.Data.Nmax">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>kw</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(MkMax)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Couple Maximal" @bind-Value="@VM.Data.Mkmax">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>Nm</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(MkMax)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Vitesse Maximal" @bind-Value="@VM.Data.Vmax">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>Km/h</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(nN)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Regime à puissance Maximal" @bind-Value="@VM.Data.nN">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>tr/min</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(nMKmax)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Regime nominal au couple Maximal" @bind-Value="@VM.Data.nMkmax">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>tr/min</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(α)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="double" PlaceHolder="Pente d'inclinason" @bind-Value="@VM.Data.α">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+          <Addon AddonType="AddonType.End">
+            <AddonLabel>°</AddonLabel>
+          </Addon>
+        </Addons>
+        <Addons>
+          <Addon AddonType="AddonType.Start">
+            <AddonLabel>(Ψmax)</AddonLabel>
+          </Addon>
+          <Addon AddonType="AddonType.Body">
+              <Validation><NumericEdit TValue="decimal" PlaceHolder="Coefficient résistance maximal" @bind-Value="@VM.Data.Ψmax">
+                  <Feedback>
+                      <ValidationError />
+                  </Feedback>
+              </NumericEdit></Validation>
+          </Addon>
+        </Addons>
+    </div>
+  </details>
+  
+  <details open="@ExpandAll"  class="more">
+      <summary><span class="more-text">Coefficient Empirique</span></summary>
+      <div class="more-content">
+        <div class="row">
+          <div class="col-4">
+            <div class="row align-items-center">
+              <span class="col-2">An </span>
+              <span class="col">
+                  <Validation>
+                      <NumericEdit TValue="decimal" PlaceHolder="" @bind-Value="@VM.EmpiricCoefficient.An">
+                          <Feedback>
+                              <ValidationError />
+                          </Feedback>
+                      </NumericEdit>
+                  </Validation>
+              </span> 
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row align-items-center">
+              <span class="col-2">Bn </span>
+              <span class="col">
+                  <Validation>
+                      <NumericEdit TValue="decimal" PlaceHolder="" @bind-Value="@VM.EmpiricCoefficient.An">
+                          <Feedback>
+                              <ValidationError />
+                          </Feedback>
+                      </NumericEdit>
+                  </Validation>
+              </span>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="row align-items-center">
+              <span class="col-2">Cn </span>
+              <span class="col">
+                  <Validation>
+                      <NumericEdit TValue="decimal" PlaceHolder="" @bind-Value="@VM.EmpiricCoefficient.Cn">
+                          <Feedback>
+                              <ValidationError />
+                          </Feedback>
+                      </NumericEdit>
+                  </Validation>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+  </details>
+</Validations>
+<Modal @ref="modalRef" Closing="@OnModalClosing">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>Déterminez "NV"</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+            <Validations @ref="nvValidation" Mode="ValidationMode.Manual">
+                <Validation UsePattern="true">
+                    <NumericEdit TValue="decimal" Pattern="[1-9]\d{0,2}" PlaceHolder="Entrez la valeur de NV" @bind-Value="@ValueNV">
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </NumericEdit>
+                </Validation>
+            </Validations>
+            <LineChart @ref="lineChart" TItem="decimal" />
+        </ModalBody>
+        <ModalFooter>
+            <Button class="btn-success" Clicked="@HideModal">Valider</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
