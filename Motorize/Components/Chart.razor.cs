@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,20 +9,20 @@ namespace Motorize.Components
 {
   public partial class Chart<TItem>
   {
-    LineChart<Models.Point> lineChart;
+    ScatteredChart lineChart;
     [Inject]
     ChartValuesState State { get; set; }
 
 
     protected override void OnInitialized()
     {
-      this.State.OnDChanged += this.OnDChanged;
     }
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
       if (firstRender)
       {
         this.InitializeChart();
+        this.State.OnDChanged += this.OnDChanged;
       }
       return base.OnAfterRenderAsync(firstRender);
     }
@@ -48,32 +47,14 @@ namespace Motorize.Components
         all.Add(max);
         all.Insert(0, 0);
         this.lineChart.AddLabel(all.Select(x => x.ToString()).ToArray());
-        //this.lineChart.SetOptions(new LineChartOptions
-        //{
-        //  Scales = new Scales
-        //  {
-        //    XAxes = e.Select(x => new Axe
-        //    {
-        //      Display = true,
-        //      Ticks = new AxeTicks
-        //      {
-        //        //FontColor = ,
-        //        Major = new AxeMajorTick(),
-        //        Minor = new AxeMinorTick(),
-        //        Padding = 2,
-        //        Display = true
-        //      }
-        //    }).ToList()
-        //  }
-        //});
         for (var i = 0; i < e.Length; i++)
         {
           this.lineChart.AddDataSet(new LineChartDataset<Models.Point>
           {
-            Label = "Rapport " + (i+1),
-            Data = e[i].Select(i => new Models.Point { x=i.Item1, y= i.Item2 }).ToList(),
-            BackgroundColor = GetColor(i),  
-            BorderColor = GetColor(i),
+            Label = "Rapport " + (i + 1),
+            Data = e[i].Select(e=> new Models.Point { x=e.Item1, y= e.Item2 }).ToList(),
+            BackgroundColor = this.GetColor(i),
+            BorderColor = this.GetColor(i),
             Fill = false,
             PointRadius = 3,
             BorderDash = new List<int> { }

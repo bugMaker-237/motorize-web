@@ -7,7 +7,7 @@ namespace Motorize.Models
 {
   public class Point
   {
-    public decimal x { get; set; }
-    public decimal y { get; set; }
+    public decimal? x { get; set; }
+    public decimal? y { get; set; }
   }
 }
