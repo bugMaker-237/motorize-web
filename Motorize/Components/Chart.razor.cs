@@ -1,5 +1,7 @@
-﻿using Blazorise.Charts;
+﻿using Blazorise;
+using Blazorise.Charts;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,17 @@ namespace Motorize.Components
   public partial class Chart<TItem>
   {
     ScatteredChart lineChart;
+    ElementReference canvasWrapper;
+    Modal modalRef;
+    string name;
+    bool hasBeenDrawn = false;
+
+    [Inject] 
+    IJSRuntime JSRuntime { get; set; }
     [Inject]
     ChartValuesState State { get; set; }
+    [Inject]
+    DataService Service { get; set; }
 
 
     protected override void OnInitialized()
@@ -37,6 +48,30 @@ namespace Motorize.Components
       });
     }
 
+    async void FullScreen()
+    {
+      await JSRuntime.InvokeAsync<string>("toggleFullScreen", canvasWrapper);
+    }
+    
+
+    async void Download()
+    {
+      await lineChart.Update();
+      await JSRuntime.InvokeAsync<string>("window.print");
+    }
+    async void ShowModal()
+    {
+      if(hasBeenDrawn)
+      modalRef.Show();
+    }
+    async void HideModal()
+    {
+      if (!string.IsNullOrWhiteSpace(this.name?.Trim()))
+      {
+        this.modalRef.Hide();
+        await Service.SaveCurrentViewModel(this.name);
+      }
+    }
     private async void OnDChanged(object sender, List<Tuple<decimal, decimal>>[] e)
     {
       if (e != null)
@@ -61,33 +96,25 @@ namespace Motorize.Components
           });
         }
         await this.lineChart.Update();
+        hasBeenDrawn = true;
       }
       else
       {
         this.InitializeChart();
+        await this.lineChart.Update();
       }
     }
 
-    private List<string> GetColor(int i)
+    private List<string> GetColor(int i) => i switch
     {
-      switch (i)
-      {
-        case 0:
-          return new List<string> { "#5B9BD5" };
-        case 1:
-          return new List<string> { "#ED7D31" };
-        case 2:
-          return new List<string> { "#A5A5A5" };
-        case 3:
-          return new List<string> { "#FFC000" };
-        case 4:
-          return new List<string> { "#4472C4" };
-        case 5:
-          return new List<string> { "#70AD47" };
-        default:
-          return new List<string> { "#5B9BD5" };
-      }
-    }
+      0 => new List<string> { "#5B9BD5" },
+      1 => new List<string> { "#ED7D31" },
+      2 => new List<string> { "#A5A5A5" },
+      3 => new List<string> { "#FFC000" },
+      4 => new List<string> { "#4472C4" },
+      5 => new List<string> { "#70AD47" },
+      _ => new List<string> { "#5B9BD5" },
+    };
 
   }
 }

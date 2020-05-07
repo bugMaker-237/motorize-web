@@ -215,3 +215,23 @@ details summary {
 details {
     padding-top: 1rem;
 }
+@media print {
+    .top-row.navbar, .content .row :first-child, .chart-block :first-child {
+        display: none;
+    }
+
+    .content .row :last-child {
+        display: flex;
+        width: 100%;
+        /*max-width: 100%;*/
+        flex: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .chart-block :last-child {
+        width: 100%;
+    }
+}

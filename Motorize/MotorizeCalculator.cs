@@ -15,58 +15,6 @@ namespace Motorize {
 
     //I think this will change (Rapport superieur de boite de vitesse)
     private const decimal ibvs = 1;
-    public void Calculate (ChartValuesViewModel viewModel) {
-      decimal coupleNominal = CalculateCoupleRegimeNominal (
-        viewModel.Data.Nmax,
-        viewModel.Data.nN
-      );
-
-      decimal reserveCouple = CalculateReserveCouple (
-        coupleNominal,
-        viewModel.Data.Nmax
-      );
-
-      decimal coefficientAdaptabiliteRegime = CalculateCoefficientAdaptabiliteRegime (
-        viewModel.Data.nN,
-        viewModel.Data.nMkmax
-      );
-
-      decimal coefficientAdaptabiliteCouple = CalculateCoefficientAdaptabiliteCouple (
-        coupleNominal,
-        viewModel.Data.Mkmax
-      );
-      decimal centreMasse = CalculateCentreMasse (
-        viewModel.Data.H
-      );
-      // decimal coefficientResistanceRoulement = CalculateCoefficientResistanceRoulement ();
-      // decimal coefficientResistanceTotalDeplacement = CalculateCoefficientResistanceTotalDeplacement (
-      //   CalculateCoefficientResistanceRoulement (),
-      //   viewModel.Data.PenteInclinason
-      // );
-      decimal coefficientCorrection = GetCoefficientCorrection ();
-
-      // decimal surfaceFrontale = CalculateSurfaceFrontale (
-      //   viewModel.Data.VoieAuSol,
-      //   viewModel.Data.Hauteur
-      // );
-      // List<Tuple<decimal, decimal>> puissanceEffectiveDataset =
-      //   GetDatasetPuissanceEffectiveVelocite (
-      //     viewModel.Data.MasseVehicule,
-      //     CalculateCoefficientResistanceTotalDeplacement (
-      //       GetCoefficientResistanceRoulement (),
-      //       viewModel.Data.PenteInclinason
-      //     ),
-      //     viewModel.Data.CoefficientAerodynamic,
-      //     CalculateSurfaceFrontale (
-      //       viewModel.Data.VoieAuSol,
-      //       viewModel.Data.Hauteur
-      //     ),
-      //     viewModel.Data.RendementGlobal,
-      //     GetCoefficientCorrection ()
-      //   );
-      // decimal rapportSuperieurTransmission = CalculateR
-      // decimal rapportTransmission = CalculateRapportTransmission ();
-    }
 
     /// <summary>
     /// Generates Dataset for Nev versus Vmax graph.

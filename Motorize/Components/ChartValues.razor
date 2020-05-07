@@ -6,14 +6,28 @@
 <Validations Mode="ValidationMode.Manual" Model="@VM" @ref="Validations">
   <div class="runner w-100 p-1">
     <a class="btn btn-success" @onclick="@Submit" role="button">Tracer</a>
-    <a class="btn btn-info" href="#" role="button">Charger</a>
     <a class="btn btn-warning" href="#" role="button" @onclick="@Reset">Reset</a>
+    <Dropdown>
+        <DropdownToggle Color="Color.Primary">
+            Charger
+        </DropdownToggle>
+        <DropdownMenu>
+            @foreach (var item in Datas)
+            {
+                <DropdownItem Clicked="LoadItem" Value="item.Value">@item.Key</DropdownItem>
+                <DropdownDivider />
+            }
+        </DropdownMenu>
+    </Dropdown>
     <style>
-      .runner{
+    .runner{
         height: 48px;
         background: #f7f7f7;
         border: 1px solid #d6d5d5;
-      }
+    }
+        .runner .dropdown {
+            display: inline-block;
+        }
     </style>
   </div>
   <details open="@ExpandAll" class="more">

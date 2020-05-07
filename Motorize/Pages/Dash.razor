@@ -1,0 +1,12 @@
+﻿@page "/dash"
+
+@using Motorize.Components;
+
+<div class="row">
+    <div class="col-12 col-md-4 p-0 pb-2">
+        <ChartValues />
+    </div>
+    <div class="col-12 col-md-8 px-0 pl-md-3">
+        <Motorize.Components.Chart TItem="Models.Point" />
+    </div>
+</div>

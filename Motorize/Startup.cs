@@ -19,6 +19,7 @@ namespace Motorize {
            // .AddMaterialIcons ();
         .AddBootstrapProviders()
         .AddSingleton<Motorize.Components.ChartValuesState>()
+        .AddSingleton<Motorize.DataService>()
         .AddFontAwesomeIcons();
     }
 

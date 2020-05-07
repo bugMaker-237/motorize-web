@@ -1,11 +1,25 @@
 ﻿@page "/"
-@using Motorize.Components;
+@inject NavigationManager NavigationManager
+<div class="row align-items-center">
+    <div class="col-4 p-0 pb-2 m-auto">
+        <h2 class="w-100 text-center">CAECCODYN AUTO</h2>
+        <TextEdit PlaceHolder="Nom d'utilisateur" Class="mb-3" @bind-Text="@username">
+        </TextEdit>
 
-<div class="row">
-  <div class="col-12 col-md-4 p-0 pb-2">
-      <ChartValues/>
-  </div>
-  <div class="col-12 col-md-8 px-0 pl-md-3">
-      <Motorize.Components.Chart TItem="Models.Point"/>
-  </div>
+        <TextEdit PlaceHolder="Mot de passe" Class="mb-3" Role="TextRole.Password" @bind-Text="@pwd">
+        </TextEdit>
+        <Button class="btn-success w-100" Clicked="@SignIn">Connexion</Button>
+    </div>
 </div>
+
+@code{
+    string username;
+    string pwd;
+    void SignIn()
+    {
+        if (username == "admin" && pwd == "admin")
+        {
+            NavigationManager.NavigateTo("dash");
+        }
+    }
+}

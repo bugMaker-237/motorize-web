@@ -2,8 +2,9 @@
 @typeparam TItem
 <div class="chart-block" style="">
     <div class="runner row justify-content-end w-100 m-0 p-1">
-        <a class="btn btn-info ml-1" href="#" role="button">Imprimer</a>
-        <a class="btn btn-warning ml-1" href="#" role="button">Plein ecran</a>
+        <a class="btn btn-info ml-1" @onclick="Download" role="button">Telecharger</a>
+        <a class="btn btn-info ml-1" @onclick="ShowModal" role="button">Enregistrer</a>
+        <a class="btn btn-warning ml-1" @onclick="FullScreen" role="button">Plein ecran</a>
         <style>
             .runner {
                 height: 48px;
@@ -12,7 +13,21 @@
             }
         </style>
     </div>
-    <div class="bg-white shadow-16" style="margin-top:1rem">
+    <div class="canvasWrapper bg-white shadow-16" @ref="canvasWrapper" style="margin-top:1rem">
         <ScatteredChart @ref="lineChart" />
     </div>
 </div>
+<Modal @ref="modalRef">
+    <ModalBackdrop />
+    <ModalContent IsCentered="true">
+        <ModalHeader>
+            <ModalTitle>Entrez le nom de la sauvegarde</ModalTitle>
+        </ModalHeader>
+        <ModalBody>
+            <TextEdit @bind-Text="name"></TextEdit>
+        </ModalBody>
+        <ModalFooter>
+            <Button class="btn-success" Clicked="@HideModal">Valider</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
