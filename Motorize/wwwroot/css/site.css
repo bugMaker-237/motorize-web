@@ -55,6 +55,7 @@ app {
 .lb {
     background-image: url(../assets/back.jpg);
     background-attachment: fixed;
+    background-size: cover;
     /* background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%); */
 }
 
@@ -217,9 +218,13 @@ details {
 }
 
 @media print {
-    .top-row.navbar, .content .row :first-child, .chart-block :first-child {
+
+    .top-row.navbar,
+    .content .row :first-child,
+    .chart-block :first-child {
         display: none;
     }
+
     .content .row :last-child {
         display: flex;
         width: 100%;
