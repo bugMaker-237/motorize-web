@@ -17,7 +17,7 @@
     string pwd;
     void SignIn()
     {
-        if (username == "admin" && pwd == "admin")
+        if (username.ToLower().Replace(" ", "") == "ensetebolowa" && pwd == "2020")
         {
             NavigationManager.NavigateTo("dash");
         }
